@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
 }
 
@@ -7,13 +7,13 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.mongodb.flashcards.app"
         minSdk 21
         targetSdk 31
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
         vectorDrawables {
             useSupportLibrary true
         }
@@ -39,11 +39,6 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
     }
-    packagingOptions {
-        resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
-        }
-    }
 }
 
 dependencies {
@@ -56,7 +51,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
     implementation "androidx.activity:activity-compose:$activity_version"
     implementation "com.google.android.material:material:$material_version"
-    implementation project(path: ':ui')
 
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 

@@ -1,4 +1,4 @@
-package com.mongodb.flashcards.app
+package com.mongodb.flashcards.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,7 +8,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.mongodb.flashcards.app.ui.theme.FlashCardsTheme
+import com.mongodb.flashcards.ui.theme.FlashCardsTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

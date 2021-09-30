@@ -3,6 +3,7 @@
     package="com.mongodb.flashcards.app">
 
     <application
+        android:name=".FlashCardsApp"
         android:allowBackup="true"
         android:fullBackupOnly="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FlashCards">
         <activity
-            android:name=".MainActivity"
+            android:name="com.mongodb.flashcards.ui.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.FlashCards.NoActionBar">
