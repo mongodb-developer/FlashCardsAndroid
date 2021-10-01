@@ -3,14 +3,18 @@ package com.mongodb.flashcards.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,15 +30,24 @@ import com.mongodb.flashcards.ui.viewmodels.DecksListViewModel
 
 @Composable
 fun DecksListView(navController: NavController, viewModel: DecksListViewModel = DecksListViewModel()) {
-    Column {
-        AppToolbar(title = "Decks")
-        DecksList(viewModel = viewModel)
+    Scaffold(
+        topBar = { AppToolbar(title = "Decks") },
+        floatingActionButton = {
+            FloatingActionButton(onClick = {
+                viewModel.onAddButton()
+            }) {
+                Icon(Icons.Filled.Add, "")
+            }
+        }
+    ) { contentPadding ->
+
+        DecksList(viewModel = viewModel, modifier = Modifier.padding(contentPadding))
     }
 }
 
 @Composable
-fun DecksList(viewModel: DecksListViewModel) {
-    LazyColumn(modifier = Modifier.fillMaxWidth()) {
+fun DecksList(viewModel: DecksListViewModel, modifier: Modifier = Modifier) {
+    LazyColumn(modifier = modifier.fillMaxWidth()) {
         items(viewModel.decks) { deck ->
             DecksListItem(name = deck)
         }

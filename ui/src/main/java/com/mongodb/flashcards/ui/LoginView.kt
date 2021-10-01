@@ -8,6 +8,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,14 +29,13 @@ import com.mongodb.flashcards.ui.viewmodels.LoginViewModel
 
 @Composable
 fun LoginView(navController: NavController, viewModel: LoginViewModel = LoginViewModel()) {
-    Column {
-        AppToolbar(title = "Flash Cards")
-        CredentialsView(navController = navController, viewModel = viewModel)
+    Scaffold(topBar = { AppToolbar(title = "Flash Cards") }) { contentPadding ->
+        CredentialsView(navController = navController, viewModel = viewModel, modifier = Modifier.padding(contentPadding))
     }
 }
 
 @Composable
-fun CredentialsView(navController: NavController, viewModel: LoginViewModel) {
+fun CredentialsView(navController: NavController, viewModel: LoginViewModel, modifier: Modifier = Modifier) {
     // <editor-fold desc="State">
     var userName by remember {
         mutableStateOf("")
@@ -47,7 +47,7 @@ fun CredentialsView(navController: NavController, viewModel: LoginViewModel) {
     // </editor-fold>
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(16.dp),
         horizontalAlignment = Alignment.Start,
