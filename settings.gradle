@@ -8,3 +8,5 @@ dependencyResolutionManagement {
 rootProject.name = "Flash Cards"
 include ':app'
 include ':ui'
+include ':domain:entities'
+include ':domain:usecases'
