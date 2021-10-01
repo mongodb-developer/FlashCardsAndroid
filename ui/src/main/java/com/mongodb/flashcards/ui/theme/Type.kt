@@ -1,4 +1,4 @@
-package com.mongodb.flashcards.app.ui.theme
+package com.mongodb.flashcards.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

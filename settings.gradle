@@ -7,3 +7,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Flash Cards"
 include ':app'
+include ':ui'
