@@ -17,15 +17,25 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.mongodb.flashcards.ui.theme.FlashCardsTheme
 import com.mongodb.flashcards.ui.viewmodels.LoginViewModel
 
 @Composable
-fun LoginView(viewModel: LoginViewModel = LoginViewModel()) {
+fun LoginView(navController: NavController, viewModel: LoginViewModel = LoginViewModel()) {
+    Column {
+        AppToolbar(title = "Flash Cards")
+        CredentialsView(navController = navController, viewModel = viewModel)
+    }
+}
+
+@Composable
+fun CredentialsView(navController: NavController, viewModel: LoginViewModel) {
     // <editor-fold desc="State">
     var userName by remember {
         mutableStateOf("")
@@ -71,7 +81,7 @@ fun LoginView(viewModel: LoginViewModel = LoginViewModel()) {
         Button(
             onClick = {
                 if (viewModel.login(userName, password)) {
-                    print("Logged in")
+                    navController.navigate("decks")
                 }
             },
             modifier = Modifier.align(Alignment.End),
@@ -88,6 +98,6 @@ fun LoginView(viewModel: LoginViewModel = LoginViewModel()) {
 @Composable
 fun LoginViewPreview() {
     FlashCardsTheme {
-        LoginView()
+        LoginView(navController = NavController(LocalContext.current))
     }
 }
