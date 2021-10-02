@@ -16,18 +16,19 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.mongodb.flashcards.data.UseCaseFactoryProvider
 import com.mongodb.flashcards.domain.io.DeckResult
 import com.mongodb.flashcards.ui.viewmodels.DecksListViewModel
 
 @Composable
-fun DecksListView(useCaseFactoryProvider: UseCaseFactoryProvider, viewModel: DecksListViewModel = DecksListViewModel()) {
+fun DecksListView(viewModel: DecksListViewModel) {
     Scaffold(
         topBar = { AppToolbar(title = "Decks") },
         floatingActionButton = {
@@ -38,15 +39,18 @@ fun DecksListView(useCaseFactoryProvider: UseCaseFactoryProvider, viewModel: Dec
             }
         }
     ) { contentPadding ->
-
         DecksList(viewModel = viewModel, modifier = Modifier.padding(contentPadding))
     }
 }
 
 @Composable
 fun DecksList(viewModel: DecksListViewModel, modifier: Modifier = Modifier) {
+    // <editor-fold desc="State">
+    val decks by viewModel.decks.observeAsState(listOf())
+    // </editor-fold>
+
     LazyColumn(modifier = modifier.fillMaxWidth()) {
-        items(viewModel.decks) { deck ->
+        items(decks) { deck ->
             DecksListItem(deck = deck)
         }
     }
