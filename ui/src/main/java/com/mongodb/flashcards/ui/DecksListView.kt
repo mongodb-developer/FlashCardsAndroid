@@ -20,17 +20,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import com.mongodb.flashcards.data.UseCaseFactoryProvider
 import com.mongodb.flashcards.domain.io.DeckResult
-import com.mongodb.flashcards.ui.theme.FlashCardsTheme
 import com.mongodb.flashcards.ui.viewmodels.DecksListViewModel
 
 @Composable
-fun DecksListView(navController: NavController, viewModel: DecksListViewModel = DecksListViewModel()) {
+fun DecksListView(useCaseFactoryProvider: UseCaseFactoryProvider, viewModel: DecksListViewModel = DecksListViewModel()) {
     Scaffold(
         topBar = { AppToolbar(title = "Decks") },
         floatingActionButton = {
@@ -78,10 +75,12 @@ fun DecksListItem(deck: DeckResult) {
     }
 }
 
+/*
 @Preview(showBackground = true)
 @Composable
 fun DecksListsViewPreview() {
     FlashCardsTheme {
-        DecksListView(navController = NavController(LocalContext.current))
+        DecksListView()
     }
 }
+*/
