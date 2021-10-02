@@ -1,3 +1,7 @@
 package com.mongodb.flashcards.domain
 
-class UseCaseFactory(private var repository: RepositoryFactory)
+import com.mongodb.flashcards.domain.usecases.GetAllDecksUseCase
+
+class UseCaseFactory(private var repositoryFactory: RepositoryFactory) {
+    fun getAllDecksUseCase(): GetAllDecksUseCase = GetAllDecksUseCase(repositoryFactory = repositoryFactory)
+}

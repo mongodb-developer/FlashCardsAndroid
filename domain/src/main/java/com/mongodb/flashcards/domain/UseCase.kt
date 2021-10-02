@@ -10,5 +10,5 @@ interface UseCase<DATAIN, DATAOUT> {
             !(businessRules.any { it() == false })
         } ?: true
 
-    fun execute(data: DATAIN?, completion: (Result<DATAOUT>) -> Unit)
+    fun execute(data: DATAIN, completion: (Result<DATAOUT>) -> Unit)
 }

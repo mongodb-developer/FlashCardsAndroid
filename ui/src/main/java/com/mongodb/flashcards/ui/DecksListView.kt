@@ -25,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.mongodb.flashcards.domain.io.DeckResult
 import com.mongodb.flashcards.ui.theme.FlashCardsTheme
 import com.mongodb.flashcards.ui.viewmodels.DecksListViewModel
 
@@ -49,13 +50,13 @@ fun DecksListView(navController: NavController, viewModel: DecksListViewModel = 
 fun DecksList(viewModel: DecksListViewModel, modifier: Modifier = Modifier) {
     LazyColumn(modifier = modifier.fillMaxWidth()) {
         items(viewModel.decks) { deck ->
-            DecksListItem(name = deck)
+            DecksListItem(deck = deck)
         }
     }
 }
 
 @Composable
-fun DecksListItem(name: String) {
+fun DecksListItem(deck: DeckResult) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -70,7 +71,7 @@ fun DecksListItem(name: String) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = name, modifier = Modifier.padding(16.dp),
+            text = deck.title, modifier = Modifier.padding(16.dp),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.h6
         )
