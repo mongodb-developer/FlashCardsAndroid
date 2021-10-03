@@ -16,20 +16,19 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import com.mongodb.flashcards.ui.theme.FlashCardsTheme
+import com.mongodb.flashcards.domain.io.DeckResult
 import com.mongodb.flashcards.ui.viewmodels.DecksListViewModel
 
 @Composable
-fun DecksListView(navController: NavController, viewModel: DecksListViewModel = DecksListViewModel()) {
+fun DecksListView(viewModel: DecksListViewModel) {
     Scaffold(
         topBar = { AppToolbar(title = "Decks") },
         floatingActionButton = {
@@ -40,22 +39,25 @@ fun DecksListView(navController: NavController, viewModel: DecksListViewModel = 
             }
         }
     ) { contentPadding ->
-
         DecksList(viewModel = viewModel, modifier = Modifier.padding(contentPadding))
     }
 }
 
 @Composable
 fun DecksList(viewModel: DecksListViewModel, modifier: Modifier = Modifier) {
+    // <editor-fold desc="State">
+    val decks by viewModel.decks.observeAsState(listOf())
+    // </editor-fold>
+
     LazyColumn(modifier = modifier.fillMaxWidth()) {
-        items(viewModel.decks) { deck ->
-            DecksListItem(name = deck)
+        items(decks) { deck ->
+            DecksListItem(deck = deck)
         }
     }
 }
 
 @Composable
-fun DecksListItem(name: String) {
+fun DecksListItem(deck: DeckResult) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -70,17 +72,19 @@ fun DecksListItem(name: String) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = name, modifier = Modifier.padding(16.dp),
+            text = deck.title, modifier = Modifier.padding(16.dp),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.h6
         )
     }
 }
 
+/*
 @Preview(showBackground = true)
 @Composable
 fun DecksListsViewPreview() {
     FlashCardsTheme {
-        DecksListView(navController = NavController(LocalContext.current))
+        DecksListView()
     }
 }
+*/
