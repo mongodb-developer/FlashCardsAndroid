@@ -1,8 +1,9 @@
 package com.mongodb.flashcards.data.handmade
 
+import com.mongodb.flashcards.data.handmade.local.LocalPersistenceDeckRepository
+import com.mongodb.flashcards.data.handmade.remote.ApiDeckRepository
 import com.mongodb.flashcards.domain.Repository
 import com.mongodb.flashcards.domain.entities.Deck
-import java.util.Date
 
 class HandmadeDeckRepository : Repository<Deck> {
     override fun add(entity: Deck, completion: (Result<Unit>) -> Unit) {
@@ -10,17 +11,19 @@ class HandmadeDeckRepository : Repository<Deck> {
     }
 
     override fun getAll(completion: (Result<List<Deck>>) -> Unit) {
-        completion(
-            Result.success(
-                listOf(
-                    Deck(
-                        "Some deck",
-                        "Deck contents",
-                        "", Date(), Date(), listOf()
-                    )
-                )
-            )
-        )
+        LocalPersistenceDeckRepository().getAll { localDecksResult ->
+            localDecksResult
+                .onSuccess { localDecks ->
+                    if (localDecks.isEmpty()) {
+                        ApiDeckRepository().getAll { remoteDecksResult ->
+                            remoteDecksResult
+                                .onSuccess { completion(Result.success(it)) }
+                        }
+                    } else {
+                        completion(Result.success(listOf()))
+                    }
+                }
+        }
     }
 
     override fun delete(entity: Deck, completion: (Result<Unit>) -> Unit) {
