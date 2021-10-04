@@ -17,25 +17,13 @@ class HandmadeDeckRepository : Repository<Deck> {
                     if (localDecks.isEmpty()) {
                         ApiDeckRepository().getAll { remoteDecksResult ->
                             remoteDecksResult
-                                .onSuccess { completion(Result.success(listOf())) }
+                                .onSuccess { completion(Result.success(it)) }
                         }
                     } else {
                         completion(Result.success(listOf()))
                     }
                 }
         }
-        //
-        // completion(
-        //     Result.success(
-        //         listOf(
-        //             Deck(
-        //                 "Some deck",
-        //                 "Deck contents",
-        //                 "", Date(), Date(), listOf()
-        //             )
-        //         )
-        //     )
-        // )
     }
 
     override fun delete(entity: Deck, completion: (Result<Unit>) -> Unit) {
